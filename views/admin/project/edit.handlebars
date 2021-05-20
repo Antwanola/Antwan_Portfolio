@@ -1,0 +1,65 @@
+<h1>Edit Project</h1>
+
+{{!-- {{#each message}}
+
+<div id="snackbar">{{message}}</div>
+{{/each}} --}}
+
+<form action="/admin/project/edit/{{project._id}}?_method=PUT" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input  name="title" type="text" class="form-control" id="title" placeholder="Enter title"  value="{{project.title}}" >
+    </div>
+
+    <div class="form-group">
+        <label for="file">File Upload</label>
+        <input type="file" name="file" class="form-control" >
+    </div>
+
+    <div class="form-group">
+        <label for="category">Category</label>
+        <select name="category" id="category" class="form-control">
+            
+            {{#select project.category}}
+            {{#each categories}}
+
+            <option value="{{category}}">{{category}}</option>
+
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <label for="status">Status</label>
+        
+        <select name="status" id="status" class="form-control">
+            {{#select project.status}}
+            <option value="public">Public</option>
+            <option value="private">Private</option>
+            <option value="draft">Draft</option>
+            {{/select}}
+        </select>
+        
+    </div>
+
+
+
+    <div class="form-check">
+        <label for="allowComment" class="form-check-label">
+        <input name="allowComment" type="checkbox" class="form-check-input" id="allowComment">
+            Allow Comments
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label for="body">Decription </label>
+        <textarea required  name="description" cols="30" rows="10" class="form-control" id="description" placeholder="Enter Description"> {{project.description}} </textarea>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Create Project</button>
+
+
+</form>

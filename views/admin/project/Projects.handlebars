@@ -1,0 +1,62 @@
+<h1>Projects</h1>
+
+
+  <!-- Example DataTables Card-->
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-table"></i> Projects</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+       
+                <tr>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Image</th>
+                  <th>Status</th>
+                  <th>Comments</th>
+                  <th>Created Date</th>
+                  <th>Description</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Title</th>
+                <th>Category</th>
+                  <th>Image</th>
+                  <th>Status</th>
+                  <th>Comments</th>
+                  <th>Created Date</th>
+                  <th>Description</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                {{#each projects}}
+                <tr>
+                  <td>{{title}}</td>
+                  <td>{{category}}</td>
+                  <td><img src="/uploads/{{file}}" height="50" ></td>
+                  <td>{{status}}</td>
+                  <td>{{allowComment}}</td>
+                  <td>{{moment date 'MMMM Do YYYY'}} - {{moment date 'HH:mm'}}</td>
+                  <td>{{description}}</td>
+                  <td><a href="/admin/project/edit/{{_id}}" class="btn btn-info">Edit</a></td>
+                  <td> 
+                    <form action="/admin/projects/{{_id}}?_method=DELETE" method="post">
+
+                    <button type="submit" class="btn btn-danger">DELETE</button>
+                </form></td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
+    </div>
