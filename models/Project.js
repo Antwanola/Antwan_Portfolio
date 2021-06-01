@@ -36,7 +36,12 @@ const project = new Schema({
     date:{
         type:Date,
         default:Date.now()
-    }
+    },
+    comment:[{
+        type:Schema.Types.ObjectId,
+        ref:'comments'
+
+    }]
 })
 
 

@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-// const bcrypt = require('bcryptjs');
 const Users = require('../../models/users');
 const bcrypt = require('bcryptjs');
 const Projects = require('../../models/Project')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
-const users = require('../../models/users');
+const { currentUri } = require('../../helpers/handlebar-helper');
+
 
 
 
@@ -18,18 +18,20 @@ next()
 
 //Home
 router.get('/', (req, res)=>{
+// console.log(req.route.path)
     Projects.find({}).lean().then(projects=>{
-        // console.log(project)
+       let filteredProject =  projects.splice(0,6)
         req.flash('home_message', 'Welcome to my portfolio !')
-        
-        res.render('./home/home', {projects,})
+     let antwan =  currentUri(req.originalUrl)
+     res.locals.antwan = antwan
+        res.render('./home/home', {filteredProject})
     }) 
 })
 
 //Project Lists
 router.get('/projects', (req, res)=>{
     Projects.find({}).lean().then(projects=>{
-
+        console.log(req.originalUrl)
 res.render('home/projects', {projects})
     })
     
@@ -38,8 +40,12 @@ res.render('home/projects', {projects})
 
 //Project detail:id
 router.get('/project-detail/:id', (req, res)=>{
-    Projects.findOne({_id:req.params.id}).lean().then(project=>{
-        console.log(project)
+    Projects.findOne({_id:req.params.id}).lean().populate({path:'comment', populate:{path:'user', model:"users"}}).then(project=>{
+        
+    //     let filteredComment
+    //   project.comment.forEach(comment=>{
+    //     filteredComment = comment.comment
+    //   })
         res. render('home/project-detail', {project})
     })
    
@@ -86,7 +92,7 @@ router.post('/register', (req, res)=>{
 passport.use(new LocalStrategy({usernameField: 'email'},
     (email, password, done)=> {
         Users.findOne({email:email}).lean().then(user=>{
-            console.log(user)
+            
             if (!user) {
                 return done(null, false, { message: 'Incorrect email.' });
               }
@@ -94,10 +100,12 @@ passport.use(new LocalStrategy({usernameField: 'email'},
               bcrypt.compare(password, user.password,(err, matched)=>{
                   if(err) return err
                   if(matched){
-                      return done(null, user)
+                    
+                      return done(null, user, {message:"The password is incorrect"})
+                     
                   }
                   else{
-                        return done(null, false, {message:"the password is incorrect"})
+                        return done(null, false, {message:"The password is incorrect"})
                   }
               })
         })
@@ -105,7 +113,9 @@ passport.use(new LocalStrategy({usernameField: 'email'},
   ))
 
   passport.serializeUser(function(user, done) {
-    done(null, user.id);
+   
+    done(null, user._id);
+    
   });
   
   passport.deserializeUser(function(id, done) {
@@ -114,22 +124,20 @@ passport.use(new LocalStrategy({usernameField: 'email'},
     });
   })
   
- 
-
-
 //login
 router.post('/login', (req, res, next)=>{
     passport.authenticate('local', { 
-    successRedirect: '/',
-    failureRedirect: '/blog',
+        
+    successRedirect: '/admin',
+    failureRedirect: '/',
     failureFlash: true 
 })(req, res , next)
 
 })
-
-
-
-
-
+//Logout
+router.get('/logout',  (req, res)=>{
+    req.logOut()
+    res.redirect('/')
+})
 
 module.exports = router

@@ -26,7 +26,15 @@
     <div class="main-page active-dark">
 
         <!--header-->
-        {{>home/header}}
+        {{#if antwan}}
+        {{>home/home-header}}
+        {{else}}
+        {{>home/general-header}}
+        {{/if}}
+        
+       
+
+        {{!-- {{>home/global-header}} --}}
        
 
 
@@ -42,6 +50,7 @@
        {{>home/register-modal}}
        {{>home/reset-password}}
        {{>home/snackbar}}
+       {{>home/error-flash}}
 
 
 
