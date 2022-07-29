@@ -4081,7 +4081,7 @@ font-family: 'Poppins', sans-serif;
 }
 
 .bg_image--28 {
-  background-image: url(../images/bg/bg-image-28.jpg);
+  background-image: url(../images/bg/bg-image-28.png);
 }
 
 .bg_image--29 {
@@ -16949,7 +16949,7 @@ BLog Details Styles
 
 .active-dark .bg_image--25 {
   background-color: #101010;
-  background-image: url(../images/bg/bg-image-28.jpg);
+  background-image: url(../images/bg/bg-image-28.png);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

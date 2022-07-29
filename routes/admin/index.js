@@ -62,36 +62,32 @@ if(message.length>0){
 else{
     if(!isEmpty(req.files)){
        let file = req.files.file
-        fileName = Date.now() + '-' + file.name;
-        file:fileName,
+       let fileName = new Date().getFullYear() + '-' + file.name;       
         file.mv('./public/uploads/' +fileName, (error)=>{
             if(error) throw error;
            req.flash('message', `${error}`)
             
         })
+
+        let allowComment = true
+        req.body.allowComment ? allowcomment = true: allowComment = false
+        const project = new Project({
+            title:req.body.title,
+            file:fileName,
+            status:req.body.status,
+            allowComment:allowComment,
+            category:req.body.category,
+            description: req.body.description,
+            link:req.body.link
+    
+        })
+        project.save().then(saved=>{
+            req.flash('message','Project with the title '+`"`+ saved.title+`"`+ ' was created successfully')
+           
+            res.redirect('/admin/projects', )       
+            
+        })
     }
-    let allowComment = true
-    req.body.allowComment ? allowcomment = true: allowComment = false
-
-   
-
-
-    const project = new Project({
-        title:req.body.title,
-       
-        status:req.body.status,
-        allowComment:allowComment,
-        category:req.body.category,
-        description: req.body.description
-
-    })
-    project.save().then(saved=>{
-        req.flash('message','Project with the title '+`"`+ saved.title+`"`+ ' was created successfully')
-       
-        res.redirect('/admin/projects', )
-       
-        
-    })
 
 }
 
@@ -137,7 +133,8 @@ router.put('/project/edit/:id', (req, res)=>{
         project.status = req.body.status,
         project.allowComment = allowComment,
         project.category = req.body.category,
-        project.description = req.body.description
+        project.description = req.body.description,
+        project.link = req.body.link
 
        project.save().then(saved=>{
             console.log(saved)
@@ -161,6 +158,7 @@ router.delete('/projects/:id', (req, res)=>{
     let message = []
     Project.findOne({_id:req.params.id}).populate('comment').then(project=>{
         fs.unlink('./public/uploads/' + project.file, (err)=>{
+            if(err) return req.flash('message','Unable to delete')
             
             if(!project.comment.length<1){
                 project.comment.forEach(comment=>{

@@ -4,7 +4,7 @@
                 <div class="header-left d-flex align-items-center">
                     <div class="logo">
                         <a href="/">
-                            <img src="/images/logo/logo-symbol-dark.png" alt="Creative Agency">
+                            {{!-- <img src="/images/logo/logo-symbol-dark.png" alt="Creative Agency"> --}}
                         </a>
                     </div>
                     <nav class="mainmenunav d-lg-block ml--50">
@@ -20,12 +20,12 @@
                                 <li class="nav-item">
                                     <a class="nav-link smoth-animation" href="#service">Service</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item">a
                                     <a class="nav-link smoth-animation" href="#portfolio">Portfolio</a>
                                 </li>
-                                <li class="nav-item">
+                                {{!-- <li class="nav-item">
                                     <a class="nav-link smoth-animation" href="#blog">Blog</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a class="nav-link smoth-animation" href="#contact">Contact</a>
                                 </li>
@@ -37,17 +37,17 @@
                 <div class="header-right">
                     <div class="social-share-inner">
                         <ul class="social-share social-style--2 color-black d-flex justify-content-start liststyle">
-                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                            {{!-- <li><a href="#"><i class="fab fa-facebook-f"></i></a></li> --}}
+                            <li><a href="https://www.linkedin.com/in/olatunji-olayiwola-b59a84130/"><i class="fab fa-linkedin-in"></i></a></li>
+                            <li><a href="https://twitter.com/AntwanOlatunji"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="https://github.com/Antwanola"><i class="fab fa-github"></i></a></li>
                         </ul>
                     </div>
                     {{#if user}}
                     <a href="javascript:;" class="avatar rounded-circle">
-                        <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" alt="Avatar" class="avatar">
+                        {{!-- <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" alt="Avatar" class="avatar"> --}}
                     </a>
-                    <div class="header-btn ml_md--20 ml_sm--0"><p style="color: white;">muri</p></div>
+                    <div class="header-btn ml_md--20 ml_sm--0"><p style="color: white;"></p></div>
                                             
                     {{else}}
                     <div class="header-btn ml_md--20 ml_sm--0 "data-toggle="modal" data-target="#login"><a class="rn-btn" href="#" ><span>log in / Register</span></a>

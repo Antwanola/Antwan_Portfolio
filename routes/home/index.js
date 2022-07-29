@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const Projects = require('../../models/Project')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
+const mailer = require('nodemailer')
 const { currentUri } = require('../../helpers/handlebar-helper');
 
 
@@ -20,7 +21,7 @@ next()
 router.get('/', (req, res)=>{
 // console.log(req.route.path)
     Projects.find({}).lean().then(projects=>{
-       let filteredProject =  projects.splice(0,6)
+       let filteredProject =  projects.splice(0,6);
         req.flash('home_message', 'Welcome to my portfolio !')
      let antwan =  currentUri(req.originalUrl)
      res.locals.antwan = antwan
@@ -60,6 +61,42 @@ router.get('/blog', (req, res)=>{
 router.get('/blog-detail', (req, res)=>{
     res. render('home/blog-detail')
 })
+
+//Mail Form
+router.post('/contact-form', (req, res)=>{
+  const transporter = mailer.createTransport({
+    host: 'smtp.mail.yahoo.com',
+    port: 587,
+    secure: false,
+    service: 'yahoo',
+    auth: {
+      user: 'olayiwolaolatunjisodiq@yahoo.com',
+      pass: 'zzuabfzyaubdqpgs'
+    },
+    debug: false,
+    logger: true
+  });
+
+    
+     const mailOptions = {
+       from: 'olayiwolaolatunjisodiq@yahoo.com',
+       to: req.body.email,
+        subject:req.body.subject,
+        html:
+         `<p><h1>Email from: <Strong>${req.body.email}</Strong></h1>
+           <br><h2>Name:${req.body.name}</h2>  <br> <p>${req.body.message} </p> </p>`
+      };
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          req.flash('message',`Message sent! ${info}. Thank you`)
+        }
+      });
+      res.redirect('/', ) 
+})
+
 
 
 //Register
