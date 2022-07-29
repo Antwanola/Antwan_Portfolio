@@ -7,6 +7,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
 const mailer = require('nodemailer')
 const { currentUri } = require('../../helpers/handlebar-helper');
+require('dotenv').config();
 
 
 
@@ -65,7 +66,7 @@ router.get('/blog-detail', (req, res)=>{
 //Mail Form
 router.post('/contact-form', (req, res)=>{
   const transporter = mailer.createTransport({
-    host: 'smtp.mail.yahoo.com',
+    host:'smtp.mail.yahoo.com',
     port: 587,
     secure: false,
     service: 'yahoo',

@@ -1,5 +1,3 @@
 module.exports = {
-
-    mongoDbUrl: process.env.MONGO_DB_URI
-
+    mongoDbUrl: 'mongodb+srv://antwan:comodor29@cluster0.ncriv.mongodb.net/portfolio?retryWrites=true&w=majority'
 };

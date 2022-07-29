@@ -9,8 +9,9 @@ const cookieParser = require('cookie-parser')
 const passport = require('passport')
 const mongoose = require('mongoose')
 const flash = require('connect-flash')
-const { mongoDbUrl } = require('./config/dev-db')
+const { mongoDbUrl } = require('./config/prod-db.js')
 const app = Express()
+require('dotenv').config();
 const {select, timeFormater, pathDetector} = require('./helpers/handlebar-helper')
 
 
@@ -30,6 +31,7 @@ MomentHandler.registerHelpers(Handlebars);
 mongoose.Promise = global.Promise
 mongoose.connect(mongoDbUrl, { useNewUrlParser: true }).then(db=>{
     console.log(' Server Connected')
+    
 })
 .catch(err=>{
     console.log(err)
