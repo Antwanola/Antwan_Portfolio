@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "Siara-healthApp",
+    "name": "Portfolio",
     "builds": [
        { "src": "app.js", "use": "@vercel/node" }
     ],
